@@ -31,11 +31,13 @@ while True:
         fire_ball = wrap.sprite.add("mario-enemies", x_mario + 50, y_mario, "fire_stream")
     wrap.sprite.move_at_angle_point(fire_ball, x_dragon,y_dragon,10)
     wrap.sprite.set_angle_to_point(fire_ball,x_dragon,y_dragon)
-    wrap.sprite.is_collide_sprite(fire_ball,dragon)
     wrap.sprite.move(mario, 0, speed_mario)
     mario_y_top = wrap.sprite.get_top(mario)
     mario_bottom = wrap.sprite.get_bottom(mario)
 
+    if wrap.sprite.is_collide_sprite(fire_ball,dragon):
+        wrap.sprite.move(dragon,0,10)
+        break
     if mario_y_top <= 0:
         wrap.sprite.move_top_to(mario, 0)
 
@@ -54,3 +56,10 @@ while True:
     if dragon_bottom >= 800:
         wrap.sprite.move_bottom_to(dragon, 800)
         speed_dragon = -15
+angle=0
+while True:
+
+    wrap.sprite.move(dragon,0,speed_dragon)
+    angle+=1
+    wrap.sprite.set_angle(dragon,angle)
+
