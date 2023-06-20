@@ -20,9 +20,7 @@ def tp_tank():
     height1=sprite.get_height(aim)
     width1=sprite.get_width(aim)
 
-@wrap.always(100)
-def tg():
-    print(v)
+
 @wrap.on_key_down(wrap.K_UP)
 def aims():
     global height,width
@@ -51,11 +49,11 @@ def dv_aim(pos_x,pos_y):
 
 
 @wrap.on_mouse_down(wrap.BUTTON_RIGHT)
-def new_skin():
-    global v
-    if sprite.is_visible(aim):
-        v=True
-
-    if sprite.is_collide_sprite(aim,green_tank) and v==True:
+def new_skin(pos_x, pos_y):
+    bali=0
+    if sprite.is_collide_sprite(aim,green_tank) and sprite.is_visible(aim):
         sprite.set_costume_next(green_tank)
-        v=False
+        bali=bali+1
+    elif sprite.is_visible(aim)==False and  sprite.is_collide_point(green_tank,pos_x,pos_y):
+        sprite.set_costume_next(green_tank)
+        bali = bali + 1
