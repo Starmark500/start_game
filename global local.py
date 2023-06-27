@@ -1,9 +1,10 @@
 
 
 def hhh():
-    global q
-    q=5
+    # global q
+
     print(q)
+    q=5
 
 def yoy():
     global r
