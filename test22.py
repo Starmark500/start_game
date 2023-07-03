@@ -8,10 +8,14 @@ world.create_world(800, 600)
 bali = 0
 timer_death = 3
 tp_tank_sec=2
+speed_tp_tank=1
+speedy_tank=10
 
 
 chet = sprite.add_text(str(bali), 50, 50, text_color=[255, 255, 255])
 timers = sprite.add_text(str(timer_death), 750, 550, text_color=[255, 255, 255])
+tp_tank_sec_txt= sprite.add_text(str(tp_tank_sec), 50, 550, text_color=[255, 255, 255])
+speedy_tank_txt= sprite.add_text(str(speedy_tank),750,50, text_color=[255,255,255])
 
 width = 20
 height = 20
@@ -23,17 +27,21 @@ green_tank = sprite.add("battle_city_tanks", 100, 100, "tank_enemy_size1_green1"
 
 @wrap.on_key_down(wrap.K_UP)
 def aims():
-    global height, width
+    global height, width, bali, chet
     sprite.set_size(aim, width, height)
-    sprite.show(aim)
 
-    if width == 20 and height == 20:
+
+    if width == 20 and height == 20 and bali >= 5:
+
         width = width + 20
         height = height + 20
-    elif width == 40 and height == 40:
+        sprite.show(aim)
+        bali -= 5
+        sprite_text.set_text(chet,str(bali))
+    elif width == 40 and height == 40 and bali == 10:
         width = width + 20
         height = height + 20
-    elif width == 60 and height == 60:
+    elif width == 60 and height == 60 and bali == 15:
         width = width + 20
         height = height + 20
 
@@ -75,12 +83,21 @@ def timer():
 
 @wrap.always(100)
 def yskorenie():
-    global tp_tank_sec
+    global tp_tank_sec, speedy_tank, speed_tp_tank
     tp_tank_sec -= 0.1
+    speedy_tank -= 0.1
+
+    sprite_text.set_text(tp_tank_sec_txt,str(round(tp_tank_sec,2)))
+    sprite_text.set_text(speedy_tank_txt,str(round(speedy_tank,2)))
 
     if tp_tank_sec < 0:
         y_r = random.randint(100, 500)
         x_r = random.randint(100, 700)
         sprite.move_to(green_tank, x_r, y_r)
-        tp_tank_sec = 2
+        tp_tank_sec = speed_tp_tank
+
+    if  speedy_tank < 0:
+        speed_tp_tank -= 0.1
+        speedy_tank = 10
+
 
